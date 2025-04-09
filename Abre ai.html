@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feliz Dia 09 Meu Amor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to top right, #ffe6f0, #fff0f5);
+      overflow: hidden;
+      height: 100vh;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .start-screen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+
+    .start-screen h1 {
+      font-size: 2.2em;
+      color: #ff4081;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
+
+    .start-screen button {
+      padding: 12px 24px;
+      font-size: 1.2em;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .start-screen button:hover {
+      transform: scale(1.05);
+    }
+
+    .letter {
+      background-color: white;
+      border: 2px solid #ffaad4;
+      border-radius: 20px;
+      padding: 30px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 500px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      z-index: 2;
+    }
+
+    .letter.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter h2 {
+      font-size: 2em;
+      color: #ff4081;
+      margin-bottom: 10px;
+    }
+
+    .letter p {
+      font-size: 1.2em;
+      color: #444;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 4s linear forwards;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="start-screen" id="startScreen">
+    <h1>Clique para abrir a cartinha 💌</h1>
+    <button onclick="startLove()">Abrir Agora</button>
+  </div>
+
+  <div class="letter" id="loveLetter">
+    <h2>Feliz Dia 09 Meu Amor! 💖</h2>
+    <p>TE AMO MUITÃO!💕</p>
+  </div>
+
+  <!-- Música local -->
+  <audio id="loveMusic" src="\arquivos\01. Marília Mendonça - Te Amo Demais.mp3" loop></audio>
+
+  <script>
+    function startLove() {
+      // Esconde a tela inicial
+      document.getElementById("startScreen").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("loveLetter").classList.add("visible");
+      }, 1000);
+
+      // Toca a música
+      const music = document.getElementById("loveMusic");
+      music.currentTime = 52;
+      music.play();
+
+      // Começa os corações subindo
+      setInterval(createHeart, 800);
+      document.body.addEventListener('mousemove', createHeart);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
